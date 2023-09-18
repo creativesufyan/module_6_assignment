@@ -50,7 +50,6 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20.0),
-              // GridView with 3 images in each row
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -75,16 +74,15 @@ class MyApp extends StatelessWidget {
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10.0),
-              // List of sample photos with titles and subtitles
               ListView.builder(
                 shrinkWrap: true,
                 physics:const  NeverScrollableScrollPhysics(),
                 itemCount: samplePhotos.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: CachedNetworkImage( // Use CachedNetworkImage for the leading icon
+                    leading: CachedNetworkImage(
                       imageUrl: imageUrls[index],
-                      width: 40, // Adjust the width and height as needed
+                      width: 40,
                       height: 40,
                       placeholder: (context, url) =>const  CircularProgressIndicator(),
                       errorWidget: (context, url, error) => const Icon(Icons.error),
