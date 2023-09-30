@@ -7,12 +7,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final List<String> imageUrls = [
-    'https://unsplash.com/photos/HfWA-Axq6Ek',
-    'https://unsplash.com/photos/HfWA-Axq6Ek',
-    'https://unsplash.com/photos/HfWA-Axq6Ek',
-    'https://unsplash.com/photos/HfWA-Axq6Ek',
-    'https://unsplash.com/photos/HfWA-Axq6Ek',
-    'https://unsplash.com/photos/HfWA-Axq6Ek',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjRCTdbQdsNDzj4ZOoe5YvpCAeS_g82k0Ng&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjRCTdbQdsNDzj4ZOoe5YvpCAeS_g82k0Ng&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjRCTdbQdsNDzj4ZOoe5YvpCAeS_g82k0Ng&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjRCTdbQdsNDzj4ZOoe5YvpCAeS_g82k0Ng&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjRCTdbQdsNDzj4ZOoe5YvpCAeS_g82k0Ng&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjRCTdbQdsNDzj4ZOoe5YvpCAeS_g82k0Ng&usqp=CAU',
   ];
 
   final List<String> samplePhotos = [
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
             children: [
               const Text(
                 'Welcome to the Photo Gallery!',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20.0),
               const TextField(
@@ -60,11 +60,22 @@ class MyApp extends StatelessWidget {
                 ),
                 itemCount: imageUrls.length,
                 itemBuilder: (context, index) {
-                  return CachedNetworkImage(
-                    imageUrl: imageUrls[index],
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) =>const  CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  return GestureDetector(
+                    onTap: () {
+                      // Show a SnackBar when the image is clicked
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Image ${index + 1} clicked'),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrls[index],
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                    ),
                   );
                 },
               ),
@@ -76,16 +87,18 @@ class MyApp extends StatelessWidget {
               const SizedBox(height: 10.0),
               ListView.builder(
                 shrinkWrap: true,
-                physics:const  NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: samplePhotos.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: CachedNetworkImage(
-                      imageUrl: imageUrls[index],
-                      width: 40,
-                      height: 40,
-                      placeholder: (context, url) =>const  CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                    leading: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrls[index],
+                        width: 40,
+                        height: 40,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      ),
                     ),
                     title: Text(samplePhotos[index]),
                     subtitle: Text('Subtitle for ${samplePhotos[index]}'),
@@ -97,6 +110,7 @@ class MyApp extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            // Show a SnackBar when the floating action button is pressed
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text('Upload button pressed'),
